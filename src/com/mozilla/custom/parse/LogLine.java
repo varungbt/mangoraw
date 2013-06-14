@@ -12,6 +12,7 @@ import ua_parser.Parser;
 import com.maxmind.geoip.LookupService;
 import com.mozilla.date.conversion.TimeToUtc;
 import com.mozilla.geo.IPtoGeo;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 
 public class LogLine {
@@ -47,8 +48,15 @@ public class LogLine {
 	}
 
 	public String getRawTableString() {
+		
 		sb = new StringBuffer();
+		
+		/* append all the geolookup information */
+		for( int i =2 ; i<=9;i++)
+			sb.append(dbLogLine.get(i)+"\t");
+		
 		for (int i = 1; i <= m.groupCount(); i++) {
+			
 			sb.append(m.group(i) + "\t");
 		}
 		return sb.toString().trim();

@@ -168,18 +168,24 @@ public class MangoLogsInMapCollection {
 				splitTab = new Vector<String>();
 				if (logline.getSplitCount() > 0) {
 					context.getCounter(LOG_PROGRESS.VALID_SPLIT).increment(1);
-					context.write(new Text(RAW_PREFIX), new Text(logline.getRawTableString()));
+					//context.write(new Text(RAW_PREFIX), new Text(logline.getRawTableString()));
 
 					context.getCounter(LOG_PROGRESS.VALID_RAW_LINE_COUNT).increment(1);
 
 					if (logline.addDate()) {
 						if (!logline.addGeoLookUp(cityLookup, domainLookup, ispLookup, orgLookup)) {
+							
 							validAnonymizedLine = false;
 						}
+						
+						/* append the details of the country ,org, etc */
+						context.write(new Text(RAW_PREFIX), new Text(logline.getRawTableString()));
+						
 					} else {
 						//TODO: add error date counter
 						validAnonymizedLine = false;
 					}
+					
 					logline.addHttpLogInfo();
 
 					if (!logline.addUserAgentInfo(ua_parser)) {

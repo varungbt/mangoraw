@@ -9,7 +9,7 @@ $jarName = $jarFolder . $ARGV[0];
 $className = $ARGV[1];
 $serverName = $ARGV[2];
 if (length($serverName) == 0) {
-	$serverName = "cm-hadoop-dev02";
+	$serverName = "testing-gw.testing.stage.metrics.scl3";
 }
 
 #using jars as folder to prevent accidental *.* :)
@@ -27,6 +27,6 @@ system($sys_cmd);
 
 
 #now copy the jar to dev cluster
-$sys_cmd = "scp $jarName aphadke\@" . $serverName . ":/home/aphadke/";
+$sys_cmd = "scp $jarName vmanohar\@" . $serverName . ":/home/vmanohar/";
 print $sys_cmd . "\n";
 system($sys_cmd);
